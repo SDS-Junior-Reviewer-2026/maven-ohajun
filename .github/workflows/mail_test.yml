@@ -1,0 +1,32 @@
+name: Email Test
+
+on:
+
+  # 버튼을 눌렀을때만 Trigger되게 합니다. (테스트용)
+  workflow_dispatch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Clone
+      - uses: actions/checkout@v4
+
+      # 2. AWS CLI 로그인 하기 (강사계정)
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+      # 3. AWS CLI를 이용하여, AWS SES 서비스로 이메일 전송하기
+      # 무조건 mincoding@naver.com 으로 보내야만 합니다. (AWS에서 설정한 내용)
+      # 받는 주소는 자유롭게 변경할 수 있습니다. 본인의 메일을 적어주세요.
+      - name: Send Email with SES
+        run: |
+          aws ses send-email \
+            --from "mincoding@naver.com" \
+            --destination "ToAddresses=ohajun12@naver.com" \
+            --message "Subject={Data=테스트 메일 전송},Body={Text={Data=안녕? KFC from GitHub Actions}}"
