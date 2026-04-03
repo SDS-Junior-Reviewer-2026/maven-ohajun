@@ -28,5 +28,5 @@ jobs:
         run: |
           aws ses send-email \
             --from "mincoding@naver.com" \
-            --destination "ToAddresses=ohajun12@naver.com" \
-            --message "Subject={Data=테스트 메일 전송},Body={Text={Data=안녕? KFC from GitHub Actions}}"
+            --destination "ToAddresses=sejin.choi@mincoding.co.kr" \
+            --message "Subject={Data=안녕하세요},Body={Text={Data=안녕하세요~}}"
